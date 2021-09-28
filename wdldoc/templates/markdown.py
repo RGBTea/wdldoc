@@ -38,6 +38,21 @@ class MarkDownNode:
                 del description[keys["choices"]]
         for key in description:
             self.inputs += "; **{}**: {}".format(key, description[key])
+            
+    def _parse_output_description(
+        self, description: Union[str, Any], keys: Dict[str, str]
+    ) -> None:
+        if isinstance(description, str):
+            self.outputs += ": {}".format(description)
+            return
+        if keys["description"] in description:
+            self.outputs += ": {}".format(description[keys["description"]])
+            del description[keys["description"]]
+            if keys["choices"] in description:
+                self.outputs += "; **Choices**: {}".format(description[keys["choices"]])
+                del description[keys["choices"]]
+        for key in description:
+            self.outputs += "; **{}**: {}".format(key, description[key])
 
     def generate_inputs(
         self,
@@ -80,10 +95,18 @@ class MarkDownNode:
         else:
             self.inputs += "\n"
 
-    def generate_outputs(self, outputs: wdl.Env.Bindings) -> None:
+    def generate_outputs(
+        self,
+        outputs: wdl.Env.Bindings,
+        parameter_metadata: Dict[str, Any],
+        keys: Dict[str, str],
+    ) -> None:
         self.outputs += "\n"
         for output in outputs:
             self.outputs += f"\n  * `{output.name}` ({output.value})"
+            description = parameter_metadata.get(output.name)
+            if description:
+                self._parse_output_description(description, keys)
 
         if self.outputs == "\n### Outputs\n":
             self.outputs += "**None**\n"

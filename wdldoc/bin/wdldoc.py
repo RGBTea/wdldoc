@@ -19,7 +19,7 @@ def document_node(
     parameter_metadata = node.parameter_meta
     inputs = classify_inputs(node)
     doc.generate_inputs(inputs, parameter_metadata, keys)
-    doc.generate_outputs(node.effective_outputs)
+    doc.generate_outputs(node.effective_outputs, parameter_metadata, keys)
     doc.generate_meta(node.meta)
 
 
