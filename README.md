@@ -17,6 +17,11 @@
 
 ## Frok information
 A Frok to fix the problem of ignoring output parameters description.
+Now can be installed like this:
+
+```bash
+pip install git+http://github.com/RGBTea/wdldoc#egg=wdldoc
+```
 
 ## 📚 Getting Started
 
