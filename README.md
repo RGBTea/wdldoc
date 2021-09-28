@@ -15,7 +15,7 @@
   </p>
 </p>
 
-## Frok information
+## Fork information
 A Frok to fix the problem of ignoring output parameters description.
 Now can be installed like this:
 
